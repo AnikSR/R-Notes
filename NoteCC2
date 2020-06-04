@@ -1,0 +1,72 @@
+# Functions: General syntax for declaring a function is:
+	> [funcName] <- function([paramlist]){
+		 .	.	.
+		function body
+		 .	.	.
+
+		return (ret_value)	# Only necessary if there's a value to return to environment.
+	}
+
+	For example:
+
+	print_mean <- function(x){
+		avr <- sum(x)/length(x)
+		print(avr)
+		
+		# Return statement isn't absolutely necessary
+		# If there's nothing to return, there's no need for a return() statement.
+		return (avr)	
+						
+	}
+
+
+# Enviroment can be examined using ls() builtin function. It shows all existing objects: functions, vectors, lists, dataframes etc.
+	> ls()
+	[1] "City"        "Col1"        "Col2"        "Col3"        "firstNames" 
+	[6] "foo"         "franchise"   "gender"      "hisList"     "Mat"        
+	[11] "myList"      "our.mean"    "our.summery" "teams"       "x"
+
+Typing only ls shows the source code of the function. 
+
+# Objects can be removed from environment with rm([obj]) function. rm(list=ls()) removes everything from current environment.
+
+# A new package can be installed using following commands:
+	> install.packages("[Package name]")
+	> library([Package name])
+
+# search() library function displays all the installed packages.
+
+# Installed package are usually automatically loaded. But if not then they can be manually loaded using:
+	> require("reshape2")	# reshape2 is a package name.
+
+Loaded package can be detached with ">detach([package name])" command.
+
+# Some good packages:
+	dplayr		: Robust functions for manipulating and summerizing tabular data.
+	reshape2	: Function for transforming dataset.
+	ggplot2		: Comprehensive data visualization function.
+	ggthemes	: addon for ggplot2 providing custom graphics theme.
+	rvest		: Flexible web scrapping function.
+
+# Read CSV file or other delimited files:
+	> read.delim("[file path]", header=TRUE, sep="\t", quote="\"", dec = ".", fill = TRUE, comment.char="", ...)
+
+# Read data from a webpage directly:
+	> read.csv("[URL]", header=TRUE, na.strings="NA")
+This function can similarly be used to read CSV files in the previous example.
+*Note: R will read string variables as factors by default. This can be avoided using, "stringsAsFactor=FALSE" option with read.csv().
+
+# head([datfile], [row_no]) shows first row_no number of rows from datfile. By default it shows 6 rows.
+
+# SPSS files can be read using read.spss() function in package:foreing. This is default in R 3.4.4
+	> read.spss("[file path]", use.value.level=TRUE, to.data.frame=TRUE)
+
+# For xls/xlsx file, there is read_excel() function in readxl package. Other packages "xlsx" and "openxlsx" are unavailabe in R 3.4.4
+	> read_excel("[file path]", ...)
+
+# Writting data:
+Writting function as of the format "write.<file_format>()". Such as:
+																	write.csv([var], [file path], row.names=FALSE, ...)
+																	write.csv2(...)
+																	write.table([var], [file path], append=FALSE, ...)
+

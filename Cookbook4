@@ -1,0 +1,69 @@
+# Small amount of data can be inserted directly through a variable.
+	> var1 <- c(pi, 2*pi/3, 5*pi/4)		# Vector data.
+	> var2 <- c('a', 'b', 'd')			# Vector data.
+	> dframe <- data.frame(var1, var2)	# Data frame.
+
+# Data frame can also be entered by first defining empty data frame and then calling edit function on it. edit() will invoke a new
+  spreadsheet window, where data can be entered very much like MS Excel.
+	> scores <- data.frame()
+	> scores <- edit(scores)
+  If the argument of edit isn't a data frame then, the default editor of the system(OS) will be invoked instead.
+
+# R naturally prints upto 6 decimal place. format() method can be used for formatting precession.
+	> pi
+	[1] 3.141593
+	> format(pi, digits=4)
+	[1] 3.142
+  Note that the number of digits specified pertains to total digits in the number, not digits after the decimal point.
+
+# format() can be used with other functions:
+	> cat(format(pi, digits=4), '\n')
+	[1] 3.142
+
+# print() can directly take 'digits' argument:
+	> print(pi, digits=4)
+	[1] 3.142
+  print() can apply this to all data structure it can handle:
+  	> print(var1, digits=4)
+	[1] 3.142, 1.571, 2.094
+  Same from data frame.
+
+# For decimal number <1, precission is calculated by keeping the non-zero digits:
+	> format(0.004567, digits=2)
+	[1] 0.0046
+	var3 <- c(0.043468, 0.002343, 0.213431)
+	> print(var3, digits=2)
+	[1] 0.0435  0.0023  0.2134
+  As can be seen, for a vector, number of digits is calculated for the number with highest precission and then applying it to all
+  over the vector.
+
+# There are many ways in R to write to a file. cat() can directly write to a file:
+	> cat("The solution is: ", pi/3, '\n', file="<filepath>")
+  This will print the output of cat to the file specified by <filepath>. Repeated action of cat will, however, overwrite <filepath>
+  with each operation. To prevent this:
+  	> cat("The solution is: ". pi/3, '\n', file="<filepath>", append=TRUE)
+  This will ensure new contents are being appended to <filepath>.
+
+# If repeated use of a single file is intended then a variable can be specified for it:
+	> von < file("AnalysisReport.out", "w")
+	> cat(data, file=von)
+	> cat(results, file=von)
+	> cat(conclusion, file=von)
+	> close(von)
+  While using variable like this, append is always TRUE, even if it is explicitely declared FALSE.
+
+# Unfortunately cat() can't handle more complex data structures like data frames. Although print() can handle these all, print can't
+  directly write to file. For situations like this, there is a function:
+  	> sink("<filepath>")
+  	> print(dfrm)	# Output printed to <filepath>.
+  	> cat(var3)	# Output to <filepath>.
+  	> sink()		# End of redirection to <filepath>.
+  A more handy use of sink() will be to run a R script and redirect the output to specified file:
+  	> sink("script_output.txt")		# Redirect output to file.
+	> source("script.R")			# Run the script, capturing its output.
+	> sink()						# Resume writing to console.
+  Using sink() like this is a script will automaticaly send output to a specified file.
+
+# list.files() will print all the files in the working directory, like 'ls' command in Bash. To see hidden files "all.files=TRUE"
+  argument have to be used.
+  

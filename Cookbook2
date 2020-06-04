@@ -1,0 +1,154 @@
+# Vector are most important data structure in R. They are formed by applying c() function on individual
+  data items:
+  	> vec1 <- c(1,2,3,4)
+	> print(vec1)
+	[1] 1 2 3 4
+  Unlike list, vectors can't contain heterogenous data type. If such is tried, type coersion occurs:
+  	> a <- c(1, 2, 3.3, 4)
+	> print(a)
+	[1] 1.0 2.0 3.3 4.0
+	> b <- c(1, 3.1, '4', "str")
+	> print(b)
+	[1] "1" "3.1" "4" "str"
+  However, if the inputs of c() function themselves are vectors, then c() concatenates and makes them a
+  larger vector:
+  	> print(c(a, b))
+	[1] "1.0" "2.0" "3.3" "4.0" "1" "3.1" "4" "str"
+
+# What type of data a data structure holds can be seen using mode() function.
+	> mode(vec1)
+	[1] "numeric"
+	> mode(b)
+	[1] "character"
+	> lst<-list('a', 4, 3.2)
+	> mode(lst)
+	[1] "list"
+
+# Basic summery statistical values: mean, median, standard deviation, variance, correlation, covariance
+  are calculated using following fucntions in R:
+  * mean(v)
+  * median(v)
+  * mode(v)
+  * sd(v)		# Standard Deviation.
+  * var(v)		# Variance.
+  * cor(u, v)	# Correlation coefficient.
+  * cov(u, v)	# Covariance coefficient.
+  Parameter of all these functions must be vector. This is why vectors are so central in R.
+
+# Comparison between vectors are done componentwise:
+	> a <- c(1, 2, 3, 4, 5)
+	> b <- c(pi, pi/2, 3*pi/2, 5*pi/4, 7.9)
+	> a == b
+	[1] FALSE  FALSE  FALSE  FALSE  FALSE
+	> a >= b
+	[1] FALSE  TRUE FALSE  TRUE FALSE
+
+
+# Colon operator (n:m) creates a vector containing the sequence n, n+1, n+2, . . . , m
+	> 0:9
+	[1] 0 1 2 3 4 5 6 7 8 9
+	> 10:19
+	[1] 10 11 12 13 14 15 16 17 18 19
+	> a <- 9:0
+	> print(a)
+	[1] 9 8 7 6 5 4 3 2 1 0
+
+# seq() function produces similar result but with greater nuance.
+	> seq(from=0, to=10, by=2)
+	[1] 0 2 4 6 8 10
+	> seq(from=0, to=2, by=0.4)
+	[1] 0.0 0.4 0.8 1.2 1.6 2.0
+	> seq(from=0, to=100, length.out=5)
+	[1] 0  25  50  75  100
+  In the later case, the vector contains "length.out" number of components.
+
+# The seq() is like range() in python and like that, seq() can create sequence in backward step.
+	> y = seq(from=9, to=2, by=-1)
+	> y
+	[1] 9 8 7 6 5 4 3 2
+
+# Indexing in R starts with 1, instead of 0 in all other programing language.
+	> fib <- [0,1,1,2,3,5,8,13,21,34,55]
+	> fib[5]
+	[1] 3
+
+# Slicing through a vector is similar to python in some way.
+	> fib[1:3]
+	[1] 0 1 1
+	> fib[4:9]
+	[1] 2 3 5 8 13 21
+  But silicing always has single step with step size of 1. Another very important difference in slicing
+  in python and R is, in R -ve slicing means completely different thing than python.
+  	> fib[-3]
+	[1] 0 1 2 3 5 8 13 21 34 55
+  Note index of "-3" output a new vector with the 3rd component of fib removed. But this trick can also
+  be applied on a chunk of the vector:
+	> fib[-(1:3)]
+	[1] 2 3 5 8 13 21 34 55
+	> fib[-1:-4]
+	[1] 3 5 8 13 21 34 55
+
+# Specific component of a vector can also be selected:
+	> fib[ fib > median(fib) ]	# Components of fib larger than the median value.
+	[1]  8 13 21 34 55
+	> # Components of fib that are either bellow 5th percentile or over 95th percentile.
+	> fib [ (fib < quantile(fib, 0.05)) | (fib > quantile(fib, 0.95)) ]
+	[1]  0 55
+	# Select all those components that exceeds +/- 2 standard deviation from the mean.
+	> fib[ abs(fib-mean(fib)) > 2*sd(fib) ]
+	[1] 55
+	> fib[!is.na(fib) & !is.null(fib) ]	# Select those components of fib that are neither null nor na.
+  These syntax are reminiscent of list comprehension in python. So I'll call them vector comprehension.
+
+# R vectors can easily be converted to dictionary:
+	> years <- c(1960, 1964, 1976, 1994)
+	> names <- c("Kentaky", "Johnson", "Carter", "Clinton")
+	> years
+	Kentaky Johnson   Carter Clinton
+	   1960    1964    1976     1994 
+	> years[3]
+	Carter
+	  1976
+	> years["Johnson"]
+	Johnson
+	   1976
+  More than one components can be called like this:
+  	> years[c("Clinton", "Kentaky")]
+	Clinton Kentaky
+	   1994    1960
+  But these are not proper dictionary as dictionaries are unordered, there are more like ordered dict.
+
+# Mathematical and logical operators in R contains quiet a few unusual ones. For example: modulous is 
+  expressed with "%%" in R, instead of "%" in all other mathematical language. logical AND and OR are
+  symbolized "&" and "|" respectively while "&&" and "||" used in all other programing languages are
+  used as "short-circuit" AND and "short-circuit" OR respectively. %any% defines special operation. Such
+  as "%*%" defines matrix multiplication etc. Such must be studied well. Page 40 of "R Cookbook" lists
+  all these operators.
+
+# Declaring function in R has this basic syntax:
+
+	function(param1, . . . , paramN) expr
+
+  Multiline block of expressions/statements are defined by curly braces:
+
+  	function(param1, . . . , paramN){
+		expr1
+		.
+		.
+		.exprN
+	}
+
+  Function name is defined by assigning a variable for that function:
+  	
+	func_name <- function(param1, . . . , paramN) expr
+
+  A few examples will make them clear:
+  	> cv <- function(x) sd(x)/mean(x)
+	>cv(1:10)
+	[1] 0.5504819
+	> gcd <- function(a, b){
+	+ if (b==0) return(a)
+	+ else return(gcd(b, a%%b))
+	+ }
+	> gcd(34, 56)
+	[1] 2

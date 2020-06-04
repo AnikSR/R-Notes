@@ -1,0 +1,66 @@
+# The default print function in R is print(). But it can only print single item:
+	> print("Hello, world!")
+	[1] "Hello, world!"
+	> print(matrix(c(1,2,3,4), 2, 2))
+		[1]	[2]
+	[1]   1   3
+	[2]   2   4
+	> print("The zero occurs at", 2*pi, "radians")
+	Error in print.default("The zero occurs at", 2 * pi, "radians") :
+  	invalid 'quote' argument
+
+# The only way to print multiple item with print() is to print them one at a time:
+	> print("The zero occurs at"); print(2*pi); print("radians")
+	[1] "The zero occurs at"
+	[1] 6.283185
+	[1] "radians"
+  But this is probably not the necessary output.
+
+# cat() can concatenate multiple string and print as single one. For example:
+	> cat("The zeros occur at", 2*pi, "radians.\n")
+	The zero occurs at 6.283158 radians.
+  As can be seen, cat() inserts a space before every item by default. However unlike print(), cat() is
+  unable to handle compound datastructures like matrix, vector, list etc.
+
+# ls() lists all the variables and functions currently available in the workspace.
+	> x <- 10
+	> y <- 50.89
+	> z <- c("three", "blind", "mice")
+	> f <- function(n, p) sqrt(p*(1-p)/n)
+	> ls()
+	[1] "f" "x" "y" "z"
+  ls() prints the names of the variables and functions as a vector. If there's no variable or function
+  is defined in the workspace, then:
+  	> ls()
+	character(0)
+
+# ls.str() show some details about them.
+	> ls.str()
+	f : function (n, p)
+	x :  num 10
+	y :  num 50.5
+	z :  chr [1:3] "three" "blind" "mice"
+
+# Following Unix file naming tradition, the variables/functions who's name start with a "." are hiddedn.
+	> .hidvar <- 10
+	> ls()
+	[1] "f" "x" "y" "z"
+  To view the hidden functions/variables "all.names=TRUE", parameter have to be given to ls().
+  	> ls(all.names=TRUE)
+	[1] ".hidvar" "f"       "x"       "y"       "z"
+
+# Variables and functions of current worksheet can be removed with rm() function.
+	> varT <- 89.89
+	> ls()
+	[1] "f" "varT" "x" "y" "z"
+	> rm(varT)
+	> ls()
+	[1] "f" "x" "y" "z"
+  rm() can work on variable length arguments. So any number of variables can be deleted at once:
+  	> rm(x, y, z)
+	> ls()
+	[1] "f"
+  Using rm() entire workspace can be deleted at once:
+  	> rm(list=ls())
+	character(0)
+  However, once variables/functions are deleted with rm() there's no going back.

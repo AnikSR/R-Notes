@@ -1,0 +1,59 @@
+# Current workspace can be saved with save.image() function. The default file to save worksapce image is the ".RData" file. If image
+  file name isn't specified, every save.image() command will rewrite the ".RData" file. Seperate file can be sepcified as argument of
+  the save.image() function.
+
+  	> save.image("filename.R")
+
+  However the ".R" extenstion might not be necessary in case of workspace image file.
+
+# load("filename.R") will load the workspace image from "filename.R" file.
+
+# history() function will print the command history in a fashion similar to less command of Unix. By default history() shows only 25 
+  lines of history. But This number can be specified as the argument of history() function.
+
+# search() function prints the list of packages currently loaded in R as the default output in the current workspace.
+
+# library(packagename) will load the specific package to current workspace. require() is identical to library() but it returns "TRUE"
+  or "FALSE" depending on the outcome and if fails it generates warning while library() generates error. So, require() can be thought
+  of as the scripting friendly version of library().
+
+# detach(packagename) unloads the package from current working directory.
+
+# data(dsname, package="pkgname") loads "dsname" dataset from "pkgname" package. data(package="pkgname") will load all the dataset in
+  the "pkgname" dataset. data() without an argument will print all available dataset in the current workspace.
+
+# library() function without any argument will print all the library names with short description, organized by location. This list
+  appears in a seperate screen like the output of "less" command.
+
+# installed.packages() prints installed packagenames on currect screen. Now installed.packages() prints the entire matrix containing
+  the packagename, libpath, version, priority, dependency, list of methods, "LinkingTo", "Suggests", "Enhances" and various licensing
+  info. Regular matrix indexing method can be used to extract specific methods from it. For example:
+
+  	> installed.packages()[,c("Package", "Version")]
+
+  will only print the package name and version information columns.
+
+# install.packages("pkgname") will install the package "pkgname". After installation it might be necessary to source the package
+  with library() or requires() function to the current workspace.
+
+# The above method will make a system wide installation. To make a local installation install.packages("pkgname", lib="<libpath>").
+  But for this the R_LIBS variables must be set to <libpath> before starting R.
+
+# The default CRAN mirror can be changed using following procedure:
+	- First call chooseCRANmirror() function, this will open a dialogue box containing all the secure CRAN mirrors, select a suitable
+	  mirror and press 'OK'.
+	- options("repos")[[1]][1] command will show URL of the mirror.
+	- options(repos="URL") added to .Rprofile file will make the "URL" the default CRAN mirror.
+
+# Sys.getenv() and Sys.setenv() functions can be used to get or set the current environment.
+
+# source("scriptfile") will load the script file to current environment. There are two ways to run scriptfile to command line:
+
+	- R CMD BATCH <scriptfile> <outfile>
+  
+  This stores the output to "outfile". With following command the script will be able to take arguments from command line and send
+  output to stdout:
+  
+  	- Rscript <scriptfile> arg1 arg2 arg3 . . .
+
+  However the fucntions defined in script must be able to recieve command line argument for this.

@@ -1,0 +1,36 @@
+#1. mean() function calculates mean of an array of data.
+#2. sd() similarly calculates the standard deviation of an array of data.
+#3. cor(f1, f2) calculates the correlation between two sets of data f1 and f2. Data sets are represented
+	by arrays.
+#4. plot(x, y) plots two sets of data. The first argument is represented by horizontal axis, the second argument is represented by
+    verticle axis.
+#5. Help options:
+
+		help.start()					General help.
+		help("foo") or ?foo				Help on function foo. Quotation mark is optional.
+		help.search("foo) or ??foo		Searches the help system for the instances of string "foo".
+		example("foo")					Example of function foo. Quotation mark is optional.
+		RSiteSearch("foo")				Searches for the string foo in online help manuals and archieve mailing lists.
+		apropos("foo", mode="function")	Lists all available functions with "foo" in their name.
+		data()							Lists all available example dataset contained in currently loaded packages.
+		vignette()						Lists all available vignettes for currently installed packages.
+		vignette("foo")					Displays specific vignette for topic "foo".
+
+
+#6. Functions for managing R workspace:
+
+		getwd()							Like pwd command in bash.
+		setwd("dir")					Like cd command in bash.
+		ls()							Lists all the objects in current workspace.
+		rm(objlist...)					Removes one or more onjects.
+		help(options)					Shows options settings.
+		Options()						Let the user see or set current options.
+		history(#)						Display last # no. of commands. Default is 25.
+		savehistory("myFile")			Saves the command history to specified file. Default is ".Rhistory".
+		loadhistory("myFile")			Loads the command history of specified file. Default is ".Rhistory".
+		save.image("myFile")			Saves the workspace image to specified file. Default is ".RData".
+		save(objlist..., file="myfl")	Saves specified objects to specified file.
+		load("myfl")					Load a wrokspace image from specified file to current session.
+		q()								Quit.
+
+#7. hist(X) plots the histogram of dataset X.
